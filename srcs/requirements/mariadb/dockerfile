@@ -2,6 +2,8 @@ FROM debian:bullseye
 
 RUN apt-get update -y && apt-get install -y mariadb-server
 
+RUN mkdir /run/mysql && chown -R mysql:mysql /run/mysql
+
 COPY tools/script.sh /usr/local/bin/script.sh
 
 RUN chmod +x /usr/local/bin/script.sh
