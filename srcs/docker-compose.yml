@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    build: requirements/nginx
+    restart: always
+    ports:
+      - "443:443"
+    networks:
+      - containers_network
+    volumes:
+      - wordpress_volume:/var/www/html
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    build: requirements/wordpress
+    restart: always
+    networks:
+      - containers_network
+    volumes:
+      - wordpress_volume:/var/www/html
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build: requirements/mariadb
+    restart: always
+    networks:
+      - containers_network
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+
+networks:
+  containers_network:
+    driver: bridge
+
+volumes:
+  mariadb_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tibarike/data/mariadb
+  wordpress_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tibarike/data/wordpress
