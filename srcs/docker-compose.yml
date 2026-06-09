@@ -6,10 +6,14 @@ services:
     image: nginx
     build: requirements/nginx
     restart: always
+    env_file:
+      - .env
     ports:
       - "443:443"
     networks:
       - containers_network
+    depends_on:
+      - wordpress
     volumes:
       - wordpress_volume:/var/www/html
   wordpress:
@@ -17,15 +21,26 @@ services:
     image: wordpress
     build: requirements/wordpress
     restart: always
+    env_file:
+      - .env
     networks:
       - containers_network
+    depends_on:
+      - mariadb
     volumes:
       - wordpress_volume:/var/www/html
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
   mariadb:
     container_name: mariadb
     image: mariadb
     build: requirements/mariadb
     restart: always
+    env_file:
+      - .env
     networks:
       - containers_network
     volumes:

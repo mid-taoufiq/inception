@@ -2,11 +2,13 @@ FROM debian:bullseye
 
 RUN apt-get update -y && apt-get install -y mariadb-server
 
-RUN mkdir /run/mysql && chown -R mysql:mysql /run/mysql
+RUN mkdir -p /home/tibarike/data/mariadb/ && mkdir -p /run/mysql && chown -R mysql:mysql /run/mysql
 
 COPY tools/script.sh /usr/local/bin/script.sh
 
 RUN chmod +x /usr/local/bin/script.sh
+
+WORKDIR /home/tibarike/Desktop/inception/srcs/requirements/mariadb/
 
 EXPOSE 3306
 

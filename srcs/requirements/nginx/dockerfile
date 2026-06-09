@@ -1,2 +1,13 @@
 FROM debian:bullseye
 
+RUN mkdir -p /home/tibarike/data/wordpress/ 
+
+COPY tools/script.sh /usr/local/bin/script.sh
+
+RUN chmod +x /usr/local/bin/script.sh
+
+WORKDIR /home/tibarike/Desktop/inception/srcs/requirements/nginx/
+
+EXPOSE 443
+
+ENTRYPOINT [ "/usr/local/bin/script.sh" ]
