@@ -1,6 +1,7 @@
 FROM debian:bullseye
 
-RUN mkdir -p /home/tibarike/data/wordpress/ 
+RUN apt-get update && \ 
+    apt-get install -y php7.4-fpm php7.4-mysql curl mariadb-client
 
 COPY tools/script.sh /usr/local/bin/script.sh
 

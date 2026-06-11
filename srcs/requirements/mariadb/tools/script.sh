@@ -20,5 +20,5 @@ if [ ! -d "/var/lib/mysql/mysql"]; then
 
 fi
 
-echo "starting mariadb!"
+echo "starting mariadb database..."
 exec mysqld --user=mysql --console

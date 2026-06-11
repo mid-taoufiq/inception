@@ -1,8 +1,8 @@
 FROM debian:bullseye
 
-RUN apt-get update -y && apt-get install -y mariadb-server
+RUN apt-get update -y && apt-get install --no-install-recommends -y mariadb-server
 
-RUN mkdir -p /home/tibarike/data/mariadb/ && mkdir -p /run/mysql && chown -R mysql:mysql /run/mysql
+RUN mkdir -p /run/mysql && chown -R mysql:mysql /run/mysql
 
 COPY tools/script.sh /usr/local/bin/script.sh
 

@@ -29,11 +29,6 @@ services:
       - mariadb
     volumes:
       - wordpress_volume:/var/www/html
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
   mariadb:
     container_name: mariadb
     image: mariadb
