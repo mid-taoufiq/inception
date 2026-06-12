@@ -3,7 +3,7 @@ FROM debian:bullseye
 RUN apt-get update && \ 
     apt-get install nginx openssl \
     mkdir -p /etc/nginx/certs \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/certs/nginx.key -out /etc/nginx/certs/nginx.crt -subj "/C=MA/ST=khouribga/L=khouribga/O=42/OU=1337/CN=zguellou.42.fr/UID=zguellou"
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/certs/nginx_cert_key.key -out /etc/nginx/certs/nginx_cert.crt -subj "/C=MA/ST=BeniMellal-Khénifra/L=khouribga/O=42/OU=1337/CN=tibarike.42.fr/UID=tibarike"
 
 COPY tools/nginx.conf /etc/nginx/nginx.conf
 
