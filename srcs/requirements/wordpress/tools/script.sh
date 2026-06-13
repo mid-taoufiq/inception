@@ -1,18 +1,34 @@
 #!/bin/bash
 
-while mysqladmin ping -h mariadb -u ${MYSQLUSR} -p ${MYSQLUSEPASS} --silent; do
-    echo "waiting for mariadb to connect..."
-    sleep 1
-done
+set -e
 
-if [ ! wp core is-installed --allow-root 2>/dev/null]; then
+if [ ! -f "/var/www/html/wp-config.php" ]; then
 
     echo "installing wordpress..."
 
-    wp core download --allow-root
-    wp config create --dbname=${MYSQLDB} --dbuser=${MYSQLUSR} --dbpass=${MYSQLUSEPASS} --dbhost=mariadb --allow-root
-    wp core install --url=${WPURL} --title=${WPTITLE} --admin_user=${WPADMINUSER} --admin_password=${WPADMINPASS} --admin_email=${WPADMINEMAIL} --skip-email --allow-root
-    wp user create ${WPUSR} ${WPUSREMAIL} --role=author --user_pass${WPUSRPASS} --allow-root
+    wp core download --allow-root --path=/var/www/html
+
+    wp config create --dbname=${MYSQL_DB} \
+                    --dbuser=${MYSQL_USR} \
+                    --dbpass=${MYSQL_USR_PASS} \
+                    --dbhost=mariadb:${MARIADB_PORT} \
+                    --allow-root \
+                    --path=/var/www/html
+    
+    wp core install --url=${WP_URL} \
+                    --title=${WP_TITLE} \
+                    --admin_user=${WP_ADMIN} \
+                    --admin_password=${WP_ADMIN_PASS} \
+                    --admin_email=${WP_ADMIN_EMAIL} \
+                    --skip-email \
+                    --allow-root \
+                    --path=/var/www/html
+
+    wp user create ${WP_USR} ${WP_USR_EMAIL} \
+                    --role=author \
+                    --user_pass=${WP_USR_PASS} \
+                    --allow-root \
+                    --path=/var/www/html
 
 fi
 
