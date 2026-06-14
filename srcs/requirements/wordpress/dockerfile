@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y php7.4-fpm php7.4-mysql curl ca-certificates && \
+    apt-get install --no-install-recommends -y php7.4-fpm php7.4-mysql curl netcat ca-certificates && \
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod 777 wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp && \
     mkdir -p /var/www/html /run/php && chown -R www-data:www-data /var/www/html && \
     mkdir -p /run/php && chown -R www-data:www-data /run/php

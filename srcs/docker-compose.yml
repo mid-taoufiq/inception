@@ -11,8 +11,8 @@ services:
     networks:
       - containers_network
     depends_on:
-      - wordpress
-        # condition: service_healthy
+      wordpress:
+        condition: service_healthy
     volumes:
       - wordpress_volume:/var/www/html
   wordpress:
@@ -28,9 +28,9 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - wordpress_volume:/var/www/html/
+      - wordpress_volume:/var/www/html
     healthcheck:
-      test: ["CMD", "php-fpm7.4", "-t"]
+      test: [ "CMD", "nc", "-z", "127.0.0.1", "9000" ]
       interval: 10s
       timeout: 7s
       retries: 3
@@ -44,9 +44,9 @@ services:
     networks:
       - containers_network
     volumes:
-      - mariadb_volume:/var/lib/mysql/
+      - mariadb_volume:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASS}", "--port=${MARIADB_PORT}", "--silent"]
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "taoufiq", "-p${MYSQL_USR_PASS}", "--port=${MARIADB_PORT}", "--silent" ]
       interval: 10s
       timeout: 7s
       retries: 3
@@ -61,10 +61,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/tibarike/data/mariadb/
+      device: /home/tibarike/data/mariadb
   wordpress_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/tibarike/data/wordpress/
+      device: /home/tibarike/data/wordpress
