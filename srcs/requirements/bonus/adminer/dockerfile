@@ -1,0 +1,8 @@
+FROM debian:bookworm
+
+RUN apt-get update && \
+    apt-get install -y php php-sql
+
+COPY ./adminer-5.4.2.php /usr/bin/
+
+ENTRYPOINT [ "php", "-s", "0.0.0.0:6767", "/usr/bin/adminer-5.4.2.php" ]
