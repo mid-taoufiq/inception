@@ -1,0 +1,10 @@
+FROM debian:bullseye
+
+RUN apt-get update && \
+    apt-get install -y make git && \
+    git clone git@github.com:Charaf3334/HTTP-Webserver.git Webserver && \
+    cd Webserver && \
+    make && \
+    chmod +x webserver
+
+CMD [ "./webserver" ]
