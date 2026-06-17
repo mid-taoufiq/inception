@@ -50,6 +50,22 @@ services:
       interval: 10s
       timeout: 7s
       retries: 3
+  redis:
+    container_name: redis
+    image: redis
+    build: requirements/bonus/redis
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - containers_network
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "taoufiq", "-p${MYSQL_USR_PASS}", "--port=${MARIADB_PORT}", "--silent" ]
+      interval: 10s
+      timeout: 7s
+      retries: 3
 
 networks:
   containers_network:
