@@ -2,16 +2,7 @@
 
 set -e
 
-echo "entered mariadb script..."
-
 sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
-
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-
-    echo "mysql not installed, installing mysql now..."
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql
-
-fi
 
 echo "creating mariadb database..."
 

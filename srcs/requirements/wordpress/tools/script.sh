@@ -15,7 +15,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     --dbhost=mariadb:${MARIADB_PORT} \
     --allow-root \
     --path=/var/www/html
-    
+
     wp core install \
     --url=${WP_URL} \
     --title=${WP_TITLE} \
