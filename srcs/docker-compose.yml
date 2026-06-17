@@ -30,7 +30,7 @@ services:
     volumes:
       - wordpress_volume:/var/www/html
     healthcheck:
-      test: [ "CMD", "nc", "-z", "127.0.0.1", "9000" ]
+      test: [ "CMD-SHELL", "cat", "/dev/null", ">", "/dev/tcp/127.0.0.1/9000" ]
       interval: 10s
       timeout: 7s
       retries: 3

@@ -10,7 +10,7 @@ clean:
 #--rmi local removes all local image created locally with docker
 fclean:
 	${DOCKERCOMPOSE} down --rmi all -v
-# 	docker system prune -af
+	docker system prune -af
 	rm -rf /home/tibarike/data/wordpress/*
 	rm -rf /home/tibarike/data/mariadb/*
 #--rmi all removes all images local and base ones
