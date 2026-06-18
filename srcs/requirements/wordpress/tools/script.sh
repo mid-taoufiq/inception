@@ -17,7 +17,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     --path=/var/www/html
 
     wp core install \
-    --url=${WP_URL} \
+    --url=https://${WP_URL} \
     --title=${WP_TITLE} \
     --admin_user=${WP_ADMIN} \
     --admin_password=${WP_ADMIN_PASS} \
