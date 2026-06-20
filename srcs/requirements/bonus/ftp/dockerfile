@@ -1,3 +1,15 @@
 FROM debian:bookworm
 
-# vsftpd
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends vsftpd
+    #(very secure ftp daemon)
+
+RUN mkdir -p /var/run/vsftpd/empty
+
+COPY tools/vsftpd.conf /etc/vsftpd.conf
+
+COPY tools/script.sh /usr/local/bin/script.sh
+
+RUN chmod +x /usr/local/bin/script.sh
+
+ENTRYPOINT [ "/usr/local/bin/script.sh" ]

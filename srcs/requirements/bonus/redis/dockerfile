@@ -1,0 +1,12 @@
+FROM debian:bookworm
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends redis-server
+
+RUN echo "maxmemory 256mb" >> /etc/redis/redis.conf && \
+    echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
+#When 256mb is full, delete the Least Recently Used (LRU) keys first
+
+COPY tools/script.sh /usr/local/bin/script.sh
+RUN chmod +x /usr/local/bin/script.sh
+ENTRYPOINT [ "/usr/local/bin/script.sh" ]

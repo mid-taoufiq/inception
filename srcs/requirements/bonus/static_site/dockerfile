@@ -1,3 +1,10 @@
 FROM debian:bookworm
 
-COPY ./index.html /var/www/html/index.html
+RUN apt-get update && \ 
+    apt-get install --no-install-recommends -y nginx
+
+COPY ./index.html /index.html
+COPY ./liesofp.jpeg /liesofp.jpeg
+COPY ./nginx.conf /nginx.conf
+
+ENTRYPOINT [ "nginx" ]

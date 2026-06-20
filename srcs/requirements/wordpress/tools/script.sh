@@ -1,10 +1,6 @@
 #!/bin/bash
 
-set -e
-
 if [ ! -f "/var/www/html/wp-config.php" ]; then
-
-    echo "installing wordpress..."
 
     wp core download --allow-root --path=/var/www/html
 
@@ -33,9 +29,13 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     --allow-root \
     --path=/var/www/html
 
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
+    wp plugin install redis-cache --activate --allow-root
+    wp redis enable --allow-root
+
 fi
 
 chown -R www-data:www-data /var/www/html
 
-echo "starting PHP-FPM engine..."
 exec php-fpm8.2 -F
