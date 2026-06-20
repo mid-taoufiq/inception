@@ -3,8 +3,8 @@ FROM debian:bookworm
 RUN apt-get update && \ 
     apt-get install --no-install-recommends -y nginx
 
-COPY ./index.html /index.html
-COPY ./liesofp.jpeg /liesofp.jpeg
-COPY ./nginx.conf /nginx.conf
+COPY tools/nginx.conf /etc/nginx/sites-enabled/default
+COPY tools/image.png /
+COPY tools/index.html /
 
-ENTRYPOINT [ "nginx" ]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]

@@ -4,8 +4,8 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y nginx openssl
 
 RUN mkdir -p /etc/nginx/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx_cert_key.key -out /etc/nginx/ssl/nginx_cert.crt -subj "/C=MA/ST=BeniMellal-Khénifra/L=khouribga/O=42/OU=1337/CN=tibarike.42.fr/UID=tibarike"
+    openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx_cert_key.key -out /etc/nginx/ssl/nginx_cert.crt -subj "/CN=tibarike.42.fr/UID=tibarike"
 
 COPY tools/nginx.conf /etc/nginx/sites-enabled/default
 
-ENTRYPOINT [ "nginx" ]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]

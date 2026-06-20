@@ -29,10 +29,10 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     --allow-root \
     --path=/var/www/html
 
-    wp config set WP_REDIS_HOST redis --allow-root
-    wp config set WP_REDIS_PORT 6379 --raw --allow-root
-    wp plugin install redis-cache --activate --allow-root
-    wp redis enable --allow-root
+    # wp config set WP_REDIS_HOST redis --allow-root
+    # wp config set WP_REDIS_PORT 6379 --raw --allow-root
+    # wp plugin install redis-cache --activate --allow-root
+    # wp redis enable --allow-root
 
 fi
 

@@ -48,31 +48,31 @@ services:
       interval: 10s
       timeout: 7s
       retries: 3
-  ftp:
-    container_name: ftp
-    image: ftp
-    build: requirements/bonus/ftp
-    restart: always
-    ports:
-      - "21:21"
-      - "3000-3020:3000-3020"
-    env_file:
-      - .env
-    networks:
-      - containers_network
-    volumes:
-      - wordpress_volume:/var/www/html
-    depends_on:
-      wordpress:
-        condition: service_healthy
+  # ftp:
+  #   container_name: ftp
+  #   image: ftp
+  #   build: requirements/bonus/ftp
+  #   restart: always
+  #   ports:
+  #     - "21:21"
+  #     - "3000-3020:3000-3020"
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - containers_network
+  #   volumes:
+  #     - wordpress_volume:/var/www/html
+  #   depends_on:
+  #     wordpress:
+  #       condition: service_healthy
     
-  redis:
-    container_name: redis
-    image: redis
-    build: requirements/bonus/redis
-    restart: always
-    networks:
-      - containers_network
+  # redis:
+  #   container_name: redis
+  #   image: redis
+  #   build: requirements/bonus/redis
+  #   restart: always
+  #   networks:
+  #     - containers_network
 
 networks:
   containers_network:
