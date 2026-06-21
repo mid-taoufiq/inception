@@ -1,0 +1,13 @@
+FROM debian:bookworm
+
+RUN apt-get update && apt-get install --no-install-recommends -y make git python3 ca-certificates g++
+
+RUN git clone https://github.com/Charaf3334/HTTP-Webserver.git webserver
+
+COPY tools/webserv.conf /webserver/
+
+WORKDIR /webserver
+
+RUN make && chmod +x webserv
+
+ENTRYPOINT [ "/webserver/webserv", "/webserver/webserv.conf" ]

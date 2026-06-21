@@ -1,4 +1,5 @@
 services:
+
   nginx:
     container_name: nginx
     image: nginx
@@ -13,6 +14,7 @@ services:
         condition: service_healthy
     volumes:
       - wordpress_volume:/var/www/html
+  
   wordpress:
     container_name: wordpress
     image: wordpress
@@ -32,6 +34,7 @@ services:
       interval: 10s
       timeout: 7s
       retries: 3
+  
   mariadb:
     container_name: mariadb
     image: mariadb
@@ -48,23 +51,24 @@ services:
       interval: 10s
       timeout: 7s
       retries: 3
-  # ftp:
-  #   container_name: ftp
-  #   image: ftp
-  #   build: requirements/bonus/ftp
-  #   restart: always
-  #   ports:
-  #     - "21:21"
-  #     - "3000-3020:3000-3020"
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - containers_network
-  #   volumes:
-  #     - wordpress_volume:/var/www/html
-  #   depends_on:
-  #     wordpress:
-  #       condition: service_healthy
+  
+  ftp:
+    container_name: ftp
+    image: ftp
+    build: requirements/bonus/ftp
+    restart: always
+    ports:
+      - "21:21"
+      - "3000-3020:3000-3020"
+    env_file:
+      - .env
+    networks:
+      - containers_network
+    volumes:
+      - wordpress_volume:/var/www/html
+    depends_on:
+      wordpress:
+        condition: service_healthy
     
   # redis:
   #   container_name: redis
@@ -73,6 +77,22 @@ services:
   #   restart: always
   #   networks:
   #     - containers_network
+
+  # static_site:
+  #   container_name: static_site
+  #   image: static_site
+  #   build: requirements/bonus/static_site
+  #   restart: always
+  #   ports:
+  #     - "6767:6767"
+
+  # webserver:
+  #   container_name: webserver
+  #   image: webserver
+  #   build: requirements/bonus/webserver
+  #   restart: always
+  #   ports:
+  #     - "6969:6969"
 
 networks:
   containers_network:
