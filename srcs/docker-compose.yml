@@ -10,11 +10,10 @@ services:
     networks:
       - containers_network
     depends_on:
-      wordpress:
-        condition: service_healthy
+      - wordpress
     volumes:
       - wordpress_volume:/var/www/html
-  
+
   wordpress:
     container_name: wordpress
     image: wordpress
@@ -25,16 +24,10 @@ services:
     networks:
       - containers_network
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
     volumes:
       - wordpress_volume:/var/www/html
-    healthcheck:
-      test: [ "CMD-SHELL", "cat", "/dev/null", ">", "/dev/tcp/127.0.0.1/9000" ]
-      interval: 10s
-      timeout: 7s
-      retries: 3
-  
+
   mariadb:
     container_name: mariadb
     image: mariadb
@@ -46,12 +39,7 @@ services:
       - containers_network
     volumes:
       - mariadb_volume:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "taoufiq", "-p${MYSQL_USR_PASS}", "--port=${MARIADB_PORT}", "--silent" ]
-      interval: 10s
-      timeout: 7s
-      retries: 3
-  
+
   ftp:
     container_name: ftp
     image: ftp
@@ -59,40 +47,11 @@ services:
     restart: always
     ports:
       - "21:21"
-      - "3000-3020:3000-3020"
+      - "15000-15030:15000-15030"
     env_file:
       - .env
-    networks:
-      - containers_network
     volumes:
       - wordpress_volume:/var/www/html
-    depends_on:
-      wordpress:
-        condition: service_healthy
-    
-  # redis:
-  #   container_name: redis
-  #   image: redis
-  #   build: requirements/bonus/redis
-  #   restart: always
-  #   networks:
-  #     - containers_network
-
-  # static_site:
-  #   container_name: static_site
-  #   image: static_site
-  #   build: requirements/bonus/static_site
-  #   restart: always
-  #   ports:
-  #     - "6767:6767"
-
-  # webserver:
-  #   container_name: webserver
-  #   image: webserver
-  #   build: requirements/bonus/webserver
-  #   restart: always
-  #   ports:
-  #     - "6969:6969"
 
 networks:
   containers_network:

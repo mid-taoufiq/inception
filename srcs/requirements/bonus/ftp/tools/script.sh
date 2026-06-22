@@ -1,12 +1,12 @@
 #!bin/bash
 
-if ! id -u "${FTP_USR}" 2> /dev/null; then
+if ! id -u "${FTP_USR}" &> /dev/null; then
 
-    useradd -d /var/www/html "${FTP_USR}"
+    useradd -d /var/www/html -s /bin/bash "${FTP_USR}"
     echo "${FTP_USR}:${FTP_PASS}" | chpasswd
     echo "${FTP_USR}" >> /etc/vsftpd.userlist
-    usermod -aG www-data "${FTP_USR}"
+    chown -R "${FTP_USR}:${FTP_USR}" /var/www/html
 
 fi
 
-exec vsftpd /etc/vsftpd.conf
+exec vsftpd /etc/vsftpd/vsftpd.conf
