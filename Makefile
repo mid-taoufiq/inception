@@ -1,4 +1,4 @@
-DOCKERCOMPOSE=docker-compose -f srcs/docker-compose.yml
+DOCKERCOMPOSE=docker compose -f srcs/docker-compose.yml
 up:
 	${DOCKERCOMPOSE} up -d --build
 

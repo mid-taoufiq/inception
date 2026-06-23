@@ -1,8 +1,9 @@
 FROM debian:bookworm
 
 RUN apt-get update && \
-    apt-get install -y php php-sql
+    apt-get install -y --no-install-recommends php php-mysql
 
 COPY ./adminer-5.4.2.php /usr/bin/
 
-ENTRYPOINT [ "php", "-s", "0.0.0.0:6767", "/usr/bin/adminer-5.4.2.php" ]
+ENTRYPOINT [ "php", "-S", "0.0.0.0:8080", "/usr/bin/adminer-5.4.2.php" ]
+#-S tells PHP to boot its built-in development web server

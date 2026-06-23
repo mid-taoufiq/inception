@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update && apt-get install -y make git python3 ca-certificates g++
+RUN apt-get update && apt-get install -y --no-install-recommends make git python3 ca-certificates g++
 
 RUN git clone https://github.com/Charaf3334/HTTP-Webserver.git webserver
 

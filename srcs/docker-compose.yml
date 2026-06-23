@@ -10,7 +10,8 @@ services:
     networks:
       - containers_network
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_healthy
     volumes:
       - wordpress_volume:/var/www/html
 
@@ -24,9 +25,15 @@ services:
     networks:
       - containers_network
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     volumes:
       - wordpress_volume:/var/www/html
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'cat /dev/null > /dev/tcp/127.0.0.1/9000'"]
+      interval: 10s
+      timeout: 7s
+      retries: 3
 
   mariadb:
     container_name: mariadb
@@ -39,11 +46,17 @@ services:
       - containers_network
     volumes:
       - mariadb_volume:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "taoufiq", "-p${MYSQL_USR_PASS}", "--port=${MARIADB_PORT}", "--silent" ]
+      interval: 10s
+      timeout: 7s
+      retries: 3
 
-  ftp_server:
-    container_name: ftp_server
-    image: ftp_server:cc
-    build: requirements/bonus/ftp_server
+  ftp:
+    container_name: ftp
+    image: ftp
+    build: requirements/bonus/ftp
+    restart: always
     networks:
       - containers_network
     ports:
@@ -53,7 +66,52 @@ services:
       - .env
     volumes:
       - wordpress_volume:/var/www/html
+
+  redis:
+    container_name: redis
+    image: redis
+    build: requirements/bonus/redis
     restart: always
+    networks:
+      - containers_network
+    depends_on:
+      wordpress:
+        condition: service_healthy
+
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    build: requirements/bonus/adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - containers_network
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+
+  static_site:
+    container_name: static_site
+    image: static_site
+    build: requirements/bonus/static_site
+    restart: always
+    ports:
+      - "6767:6767"
+
+  webserver:
+    container_name: webserver
+    image: webserver
+    build: requirements/bonus/webserver
+    restart: always
+    ports:
+      - "6969:6969"
+    env_file:
+      - .env
+    volumes:
+      - wordpress_volume:/var/www/html
 
 networks:
   containers_network:
