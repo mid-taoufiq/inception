@@ -40,18 +40,20 @@ services:
     volumes:
       - mariadb_volume:/var/lib/mysql
 
-  ftp:
-    container_name: ftp
-    image: ftp
-    build: requirements/bonus/ftp
-    restart: always
+  ftp_server:
+    container_name: ftp_server
+    image: ftp_server:cc
+    build: requirements/bonus/ftp_server
+    networks:
+      - containers_network
     ports:
       - "21:21"
-      - "15000-15030:15000-15030"
+      - "15000-15010:15000-15010"
     env_file:
       - .env
     volumes:
       - wordpress_volume:/var/www/html
+    restart: always
 
 networks:
   containers_network:

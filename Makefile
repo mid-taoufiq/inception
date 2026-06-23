@@ -1,6 +1,6 @@
 DOCKERCOMPOSE=docker-compose -f srcs/docker-compose.yml
 up:
-	${DOCKERCOMPOSE} up --build
+	${DOCKERCOMPOSE} up -d --build
 
 down:
 	${DOCKERCOMPOSE} down

@@ -1,7 +1,7 @@
 FROM debian:bookworm
 
 RUN apt-get update && \ 
-    apt-get install --no-install-recommends -y nginx
+    apt-get install -y nginx
 
 COPY tools/nginx.conf /etc/nginx/sites-enabled/default
 COPY tools/image.png /
