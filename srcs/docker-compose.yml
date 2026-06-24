@@ -30,7 +30,7 @@ services:
     volumes:
       - wordpress_volume:/var/www/html
     healthcheck:
-      test: ["CMD-SHELL", "bash -c 'cat /dev/null > /dev/tcp/127.0.0.1/9000'"]
+      test: ["CMD-SHELL", "test -f /var/www/html/wp-config.php"]
       interval: 10s
       timeout: 7s
       retries: 3
@@ -78,7 +78,6 @@ services:
       wordpress:
         condition: service_healthy
 
-
   adminer:
     container_name: adminer
     image: adminer
@@ -91,7 +90,6 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-
 
   static_site:
     container_name: static_site
@@ -119,7 +117,6 @@ networks:
 
 volumes:
   mariadb_volume:
-    driver: local
     driver_opts:
       type: none
       o: bind
