@@ -10,10 +10,4 @@ clean:
 	rm -rf /home/tibarike/data/wordpress/*
 	rm -rf /home/tibarike/data/mariadb/*
 
-fclean:
-	${DOCKERCOMPOSE} down --rmi all -v
-	rm -rf /home/tibarike/data/wordpress/*
-	rm -rf /home/tibarike/data/mariadb/*
-	docker system prune -af
-
-re: fclean up
+re: clean up
