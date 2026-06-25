@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sleep 7
+sleep 10
 
 exec nginx -g "daemon off;"

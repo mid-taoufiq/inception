@@ -96,8 +96,8 @@ services:
     image: static_site
     build: requirements/bonus/static_site
     restart: always
-    ports:
-      - "6767:6767"
+    networks:
+      - containers_network
 
   webserver:
     container_name: webserver
