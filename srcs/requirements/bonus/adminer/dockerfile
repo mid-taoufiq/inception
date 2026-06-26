@@ -6,4 +6,3 @@ RUN apt-get update && \
 COPY ./adminer-5.4.2.php /usr/bin/
 
 ENTRYPOINT [ "php", "-S", "0.0.0.0:8080", "/usr/bin/adminer-5.4.2.php" ]
-#-S tells PHP to boot its built-in development web server
