@@ -8,8 +8,4 @@ RUN mkdir -p /etc/nginx/ssl && \
 
 COPY tools/nginx.conf /etc/nginx/sites-enabled/default
 
-COPY tools/script.sh /
-
-RUN chmod +x /script.sh
-
-ENTRYPOINT [ "/script.sh" ]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]

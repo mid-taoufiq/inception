@@ -2,7 +2,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx
+    image: nginx:inception
     build: requirements/nginx
     restart: always
     ports:
@@ -17,7 +17,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress
+    image: wordpress:inception
     build: requirements/wordpress
     restart: always
     env_file:
@@ -37,7 +37,7 @@ services:
 
   mariadb:
     container_name: mariadb
-    image: mariadb
+    image: mariadb:inception
     build: requirements/mariadb
     restart: always
     env_file:
@@ -54,7 +54,7 @@ services:
 
   ftp:
     container_name: ftp
-    image: ftp
+    image: ftp:inception
     build: requirements/bonus/ftp
     restart: always
     networks:
@@ -69,7 +69,7 @@ services:
 
   redis:
     container_name: redis
-    image: redis
+    image: redis:inception
     build: requirements/bonus/redis
     restart: always
     networks:
@@ -80,7 +80,7 @@ services:
 
   adminer:
     container_name: adminer
-    image: adminer
+    image: adminer:inception
     build: requirements/bonus/adminer
     restart: always
     ports:
@@ -93,7 +93,7 @@ services:
 
   static_site:
     container_name: static_site
-    image: static_site
+    image: static_site:inception
     build: requirements/bonus/static_site
     restart: always
     networks:
@@ -101,7 +101,7 @@ services:
 
   webserver:
     container_name: webserver
-    image: webserver
+    image: webserver:inception
     build: requirements/bonus/webserver
     restart: always
     ports:
