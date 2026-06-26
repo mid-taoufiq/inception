@@ -57,8 +57,6 @@ services:
     image: ftp:inception
     build: requirements/bonus/ftp
     restart: always
-    networks:
-      - containers_network
     ports:
       - "21:21"
       - "15000-15010:15000-15010"
@@ -96,8 +94,8 @@ services:
     image: static_site:inception
     build: requirements/bonus/static_site
     restart: always
-    networks:
-      - containers_network
+    ports:
+      - "6767:6767"
 
   webserver:
     container_name: webserver
@@ -106,10 +104,6 @@ services:
     restart: always
     ports:
       - "6969:6969"
-    env_file:
-      - .env
-    volumes:
-      - wordpress_volume:/var/www/html
 
 networks:
   containers_network:
